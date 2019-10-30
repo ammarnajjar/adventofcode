@@ -1,3 +1,5 @@
-# Advent of code tasks
+# Advent of code challenge solutions
 
-My solutions to [Advent of code](https://adventofcode.com) challenges!
+![2018-Pipeline](https://github.com/ammarnajjar/adventofcode/workflows/2018/badge.svg)
+
+My solutions for the [Advent of code](https://adventofcode.com) challenges!
