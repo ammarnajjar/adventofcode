@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import pytest
-from solution import first_frequesncy_reached_twice
-from solution import sum_lines
+
+from .solution import first_frequesncy_reached_twice
+from .solution import sum_lines
 
 
 INPUT = [("+1\n+1\n+1", 3), ("+1\n+1\n-2", 0), ("-1\n-2\n-3", -6)]
