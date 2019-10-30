@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pytest
+
 from .solution import first_frequesncy_reached_twice
 from .solution import sum_lines
 
