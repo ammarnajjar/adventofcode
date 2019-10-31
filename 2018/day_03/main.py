@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 
+from solution import claim_not_overlaped
 from solution import shared_squares
 
 
@@ -10,7 +11,8 @@ current_path = os.path.dirname(os.path.realpath(__file__))
 def main():
     with open(f"{current_path}/input", "r") as fi:
         input_text = fi.read()
-        print(f"Shared Squares = {shared_squares(input_text)}")
+        print(f"Shared squares = {shared_squares(input_text)}")
+        print(f"Claim not overlapped = {claim_not_overlaped(input_text)}")
 
 
 if __name__ == "__main__":
