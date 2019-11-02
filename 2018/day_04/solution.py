@@ -47,13 +47,15 @@ def key_with_max_value(minutes: Dict[int, int]) -> int:
     return chosen_guard
 
 
-def minute_most_asleep(spans: List[Tuple[int, int]]) -> int:
+def minute_most_asleep(spans: List[Tuple[int, int]]) -> Tuple[int, int]:
     rank = {m: 0 for m in range(60)}
     for m in range(60):
         for span in spans:
             if m in range(*span):
                 rank[m] += 1
-    return key_with_max_value(rank)
+    minute = key_with_max_value(rank)
+    frequency = rank[minute]
+    return minute, frequency
 
 
 def choose_guard(input_data: str) -> int:
@@ -61,5 +63,20 @@ def choose_guard(input_data: str) -> int:
     actions_in_order = order_chronologically(data_list)
     minutes, spans = sleeping_map(actions_in_order)
     chosen_guard = key_with_max_value(minutes)
-    chosen_minute = minute_most_asleep(spans[chosen_guard])
+    chosen_minute, _ = minute_most_asleep(spans[chosen_guard])
+    return chosen_guard * chosen_minute
+
+
+def guard_freq_alseep(input_data: str) -> int:
+    data_list = input_data.strip().split("\n")
+    actions_in_order = order_chronologically(data_list)
+    minutes, spans = sleeping_map(actions_in_order)
+    guard_freq = {}
+    freq_minute = {}
+    for _id, span_list in spans.items():
+        m, f = minute_most_asleep(span_list)
+        guard_freq.update({_id: f})
+        freq_minute.update({f: m})
+    chosen_guard = key_with_max_value(guard_freq)
+    chosen_minute = freq_minute[guard_freq[chosen_guard]]
     return chosen_guard * chosen_minute

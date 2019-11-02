@@ -2,6 +2,7 @@
 import pytest
 
 from .solution import choose_guard
+from .solution import guard_freq_alseep
 from .solution import key_with_max_value
 from .solution import order_chronologically
 from .solution import sleeping_map
@@ -143,26 +144,27 @@ sample_input = [
         240,
     ),
     (
-        "[1518-11-04 00:02] Guard #99 begins shift\n"
         "[1518-11-01 00:05] falls asleep\n"
-        "[1518-11-02 00:40] falls asleep\n"
-        "[1518-11-01 23:58] Guard #99 begins shift\n"
-        "[1518-11-02 00:50] wakes up\n"
-        "[1518-11-05 00:45] falls asleep\n"
+        "[1518-11-04 00:46] wakes up\n"
+        "[1518-11-05 00:03] Guard #99 begins shift\n"
+        "[1518-11-05 00:55] wakes up\n"
         "[1518-11-03 00:05] Guard #10 begins shift\n"
         "[1518-11-01 00:00] Guard #10 begins shift\n"
         "[1518-11-01 00:30] falls asleep\n"
         "[1518-11-01 00:25] wakes up\n"
+        "[1518-11-02 00:50] wakes up\n"
+        "[1518-11-02 00:40] falls asleep\n"
+        "[1518-11-01 00:55] wakes up\n"
+        "[1518-11-01 23:58] Guard #99 begins shift\n"
+        "[1518-11-04 00:02] Guard #99 begins shift\n"
+        "[1518-11-05 00:45] falls asleep\n"
         "[1518-11-03 00:24] falls asleep\n"
         "[1518-11-03 00:29] wakes up\n"
-        "[1518-11-04 00:36] falls asleep\n"
-        "[1518-11-04 00:46] wakes up\n"
-        "[1518-11-05 00:03] Guard #99 begins shift\n"
-        "[1518-11-05 00:55] wakes up\n"
-        "[1518-11-01 00:55] wakes up\n",
+        "[1518-11-04 00:36] falls asleep\n",
         240,
     ),
 ]
+
 
 int_dict_input = [
     (
@@ -224,3 +226,58 @@ class TestDay04Part01:
     def test_choose_guard(self, choose_guard_input):
         input, expected = choose_guard_input
         assert choose_guard(input) == expected
+
+
+sample_input = [
+    (
+        "[1518-11-04 00:02] Guard #99 begins shift\n"
+        "[1518-11-01 00:05] falls asleep\n"
+        "[1518-11-02 00:40] falls asleep\n"
+        "[1518-11-01 23:58] Guard #99 begins shift\n"
+        "[1518-11-02 00:50] wakes up\n"
+        "[1518-11-05 00:45] falls asleep\n"
+        "[1518-11-03 00:05] Guard #10 begins shift\n"
+        "[1518-11-01 00:00] Guard #10 begins shift\n"
+        "[1518-11-01 00:30] falls asleep\n"
+        "[1518-11-01 00:25] wakes up\n"
+        "[1518-11-03 00:24] falls asleep\n"
+        "[1518-11-03 00:29] wakes up\n"
+        "[1518-11-04 00:36] falls asleep\n"
+        "[1518-11-04 00:46] wakes up\n"
+        "[1518-11-05 00:03] Guard #99 begins shift\n"
+        "[1518-11-05 00:55] wakes up\n"
+        "[1518-11-01 00:55] wakes up\n",
+        4455,
+    ),
+    (
+        "[1518-11-01 00:05] falls asleep\n"
+        "[1518-11-04 00:46] wakes up\n"
+        "[1518-11-05 00:03] Guard #99 begins shift\n"
+        "[1518-11-05 00:55] wakes up\n"
+        "[1518-11-03 00:05] Guard #10 begins shift\n"
+        "[1518-11-01 00:00] Guard #10 begins shift\n"
+        "[1518-11-01 00:30] falls asleep\n"
+        "[1518-11-01 00:25] wakes up\n"
+        "[1518-11-02 00:50] wakes up\n"
+        "[1518-11-02 00:40] falls asleep\n"
+        "[1518-11-01 00:55] wakes up\n"
+        "[1518-11-01 23:58] Guard #99 begins shift\n"
+        "[1518-11-04 00:02] Guard #99 begins shift\n"
+        "[1518-11-05 00:45] falls asleep\n"
+        "[1518-11-03 00:24] falls asleep\n"
+        "[1518-11-03 00:29] wakes up\n"
+        "[1518-11-04 00:36] falls asleep\n",
+        4455,
+    ),
+]
+
+
+@pytest.fixture(params=sample_input)
+def guard_freq_alseep_input(request):
+    return request.param
+
+
+class TestDay04Part02:
+    def test_guard_freq_alseep(self, guard_freq_alseep_input):
+        input, expected = guard_freq_alseep_input
+        assert guard_freq_alseep(input) == expected
