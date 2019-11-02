@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 
 
 def chars_after_reactions(input_data: str) -> int:
@@ -21,3 +22,16 @@ def chars_after_reactions(input_data: str) -> int:
         if stop or len(input_data) == 1:
             break
     return len(r)
+
+
+def min_chars_after_reactions(input_data: str) -> int:
+    all_chars = set(input_data.lower())
+    _min = sys.maxsize
+    for c in all_chars:
+        n = chars_after_reactions(
+            input_data.replace(c, '').replace(c.upper(), ''),
+        )
+        if n < _min:
+            _min = n
+        print(c, n, _min)
+    return _min
