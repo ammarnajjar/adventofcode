@@ -82,3 +82,22 @@ def largest_area(points_string: str) -> int:
             areas.append(area)
     print('areas are calculated')
     return max([areas.count(a) for a in target_points])
+
+
+def region_size(points_string: str, max_size: int) -> int:
+    points = str_to_points(points_string)
+    min_x = min([p.x for p in points])
+    max_x = max([p.x for p in points])
+    min_y = min([p.y for p in points])
+    max_y = max([p.y for p in points])
+    region = 0
+    for x in range(min_x, max_x):
+        for y in range(min_y, max_y):
+            print(f'scanning ({x}, {y})')
+            d = sum([
+                manhatten_distance(Point(x, y), p)
+                for p in points
+            ])
+            if d < max_size:
+                region += 1
+    return region

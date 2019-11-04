@@ -5,6 +5,7 @@ from .solution import largest_area
 from .solution import manhatten_distance
 from .solution import non_outer_points
 from .solution import Point
+from .solution import region_size
 from .solution import str_to_points
 
 input_manhatten_str = [
@@ -52,7 +53,7 @@ points_outers = [
     ),
 ]
 
-points_sample = [
+points_sample1 = [
     (
         '1, 1\n1, 6\n8, 3\n3, 4\n5, 5\n8, 9\n',
         17,
@@ -79,7 +80,7 @@ def input_points_outers(request):
     return request.param
 
 
-@pytest.fixture(params=points_sample)
+@pytest.fixture(params=points_sample1)
 def input_points_sample1(request):
     return request.param
 
@@ -102,3 +103,28 @@ class TestDay06Part01:
     def test_largest_area(self, input_points_sample1):
         points_string, expected = input_points_sample1
         assert largest_area(points_string) == expected
+
+
+points_sample2 = [
+    (
+        '1, 1\n1, 6\n8, 3\n3, 4\n5, 5\n8, 9\n',
+        32,
+        16,
+    ),
+    (
+        '2, 1\n1, 6\n8, 3\n0, 4\n5, 5\n8, 9\n',
+        32,
+        8,
+    ),
+]
+
+
+@pytest.fixture(params=points_sample2)
+def input_points_sample2(request):
+    return request.param
+
+
+class TestDay06Part02:
+    def test_reagion_size(self, input_points_sample2):
+        points_string, max_size, expected = input_points_sample2
+        assert region_size(points_string, max_size) == expected
