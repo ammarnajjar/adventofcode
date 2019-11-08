@@ -15,10 +15,11 @@ repos:
       - id: name-tests-test
       - id: requirements-txt-fixer
       - id: check-added-large-files
-  - repo: https://github.com/ammarnajjar/mirrors-wemake-python-styleguide
-    rev: 0.12.5
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
     hooks:
-      - id: wemake-python-styleguide
+      - id: flake8
+        additional_dependencies: [wemake-python-styleguide==0.12.5]
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.4.4
     hooks:
