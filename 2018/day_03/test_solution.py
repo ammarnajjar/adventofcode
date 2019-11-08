@@ -1,18 +1,16 @@
-#!/usr/bin/env python
 import pytest
-
-from .solution import claim_not_overlaped
-from .solution import shared_squares
+from day_03.solution import claim_not_overlaped
+from day_03.solution import shared_squares
 
 INPUT1 = [
-    ("#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n", 4),
-    ("#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 4,5: 3x2\n", 6),
-    ("#1 @ 1,3: 4x4\n#2 @ 2,1: 5x4\n#3 @ 4,5: 3x2\n", 8),
+    ('#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n', 4),
+    ('#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 4,5: 3x2\n', 6),
+    ('#1 @ 1,3: 4x4\n#2 @ 2,1: 5x4\n#3 @ 4,5: 3x2\n', 8),
 ]
 
 
 @pytest.fixture(params=INPUT1)
-def input_1_(request):
+def input1(request):
     return request.param
 
 
@@ -44,19 +42,19 @@ class TestDay03Part01:
      ['.', '1', '1', '1', 'x', '3', '3']]
      """
 
-    def test_shared_squares(self, input_1_):
-        input, expected = input_1_
-        assert shared_squares(input) == expected
+    def test_shared_squares(self, input1):
+        input_str, expected = input1
+        assert shared_squares(input_str) == expected
 
 
 INPUT2 = [
-    ("#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n", 3),
-    ("#1 @ 1,3: 2x4\n#2 @ 3,1: 4x4\n#3 @ 4,4: 2x3\n", 1),
+    ('#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n', 3),
+    ('#1 @ 1,3: 2x4\n#2 @ 3,1: 4x4\n#3 @ 4,4: 2x3\n', 1),
 ]
 
 
 @pytest.fixture(params=INPUT2)
-def input_2_(request):
+def input2(request):
     return request.param
 
 
@@ -80,6 +78,6 @@ class TestDay03Part02:
      ['.', '1', '1', '.', '3', '3', '.']]
      """
 
-    def test_claim_not_overlaped(self, input_2_):
-        input, expected = input_2_
-        assert claim_not_overlaped(input) == expected
+    def test_claim_not_overlaped(self, input2):
+        input_str, expected = input2
+        assert claim_not_overlaped(input_str) == expected

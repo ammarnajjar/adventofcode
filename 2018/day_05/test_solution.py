@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 import pytest
+from day_05.solution import chars_after_reactions
+from day_05.solution import min_chars_after_reactions
 
-from .solution import chars_after_reactions
-from .solution import min_chars_after_reactions
-
-input_formula = [
+INPUT_FORMULA1 = [
     (
         'dabAcCaCBAcCcaDA',
         10,
@@ -40,18 +38,18 @@ input_formula = [
 ]
 
 
-@pytest.fixture(params=input_formula)
+@pytest.fixture(params=INPUT_FORMULA1)
 def input_to_scan(request):
     return request.param
 
 
 class TestDay05Part01:
     def test_chars_after_reactions(self, input_to_scan):
-        input, expected = input_to_scan
-        assert chars_after_reactions(input) == expected
+        input_str, expected = input_to_scan
+        assert chars_after_reactions(input_str) == expected
 
 
-input_formula = [
+INPUT_FORMULA2 = [
     (
         'dabAcCaCBAcCcaDA',
         4,
@@ -75,12 +73,12 @@ input_formula = [
 ]
 
 
-@pytest.fixture(params=input_formula)
+@pytest.fixture(params=INPUT_FORMULA2)
 def input_part2(request):
     return request.param
 
 
 class TestDay05Part02:
     def test_min_chars_after_reactions(self, input_part2):
-        input, expected = input_part2
-        assert min_chars_after_reactions(input) == expected
+        input_str, expected = input_part2
+        assert min_chars_after_reactions(input_str) == expected

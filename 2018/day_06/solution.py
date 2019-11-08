@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import sys
 from dataclasses import dataclass
 from typing import List
@@ -18,13 +17,18 @@ def str_to_points(input_data: str) -> List[Point]:
     r = []
     for line in input_data.strip().split('\n'):
         # each line has coordinates for exactly one point
-        x, y = [int(a.strip()) for a in line.split(',')]
+        x, y = [
+            int(a.strip())
+            for a in line.split(',')
+        ]
         r.append(Point(x, y))
     return r
 
 
 def manhatten_distance(p1: Point, p2: Point) -> int:
-    return abs(p1.x - p2.x) + abs(p1.y - p2.y)
+    dx = abs(p1.x - p2.x)
+    dy = abs(p1.y - p2.y)
+    return dx + dy
 
 
 def get_quarter(dx: int, dy: int) -> int:
@@ -34,13 +38,10 @@ def get_quarter(dx: int, dy: int) -> int:
     if dx > 0:
         if dy > 0:
             return 1
-        else:
-            return 4
-    else:
-        if dy > 0:
-            return 2
-        else:
-            return 3
+        return 4
+    elif dy > 0:
+        return 2
+    return 3
 
 
 def non_outer_points(points: List[Point]) -> List[Point]:
@@ -65,10 +66,10 @@ def non_outer_points(points: List[Point]) -> List[Point]:
 def largest_area(points_string: str) -> int:
     points = str_to_points(points_string)
     target_points = non_outer_points(points)
-    min_x = min([p.x for p in points])
-    max_x = max([p.x for p in points])
-    min_y = min([p.y for p in points])
-    max_y = max([p.y for p in points])
+    min_x = min(p.x for p in points)
+    max_x = max(p.x for p in points)
+    min_y = min(p.y for p in points)
+    max_y = max(p.y for p in points)
     areas = []
     for x in range(min_x, max_x):
         for y in range(min_y, max_y):
@@ -81,23 +82,23 @@ def largest_area(points_string: str) -> int:
                     area = p
             areas.append(area)
     print('areas are calculated')
-    return max([areas.count(a) for a in target_points])
+    return max(areas.count(a) for a in target_points)
 
 
 def region_size(points_string: str, max_size: int) -> int:
     points = str_to_points(points_string)
-    min_x = min([p.x for p in points])
-    max_x = max([p.x for p in points])
-    min_y = min([p.y for p in points])
-    max_y = max([p.y for p in points])
+    min_x = min(p.x for p in points)
+    max_x = max(p.x for p in points)
+    min_y = min(p.y for p in points)
+    max_y = max(p.y for p in points)
     region = 0
     for x in range(min_x, max_x):
         for y in range(min_y, max_y):
             print(f'scanning ({x}, {y})')
-            d = sum([
+            d = sum(
                 manhatten_distance(Point(x, y), p)
                 for p in points
-            ])
+            )
             if d < max_size:
                 region += 1
     return region

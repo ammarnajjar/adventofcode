@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from collections import defaultdict
 from datetime import datetime
 from typing import Dict
@@ -13,12 +12,22 @@ def order_chronologically(data_list: List[str]) -> List[str]:
     )
 
 
-SleepingMap = Tuple[Dict[int, int], Dict[int, List[Tuple[int, int]]]]
+SleepingMap = Tuple[
+    Dict[int, int],
+    Dict[
+        int,
+        List[Tuple[int, int]],
+    ],
+]
+SpanType = Dict[
+    int,
+    List[Tuple[int, int]],
+]
 
 
 def sleeping_map(sorted_data_list: List[str]) -> SleepingMap:
     minutes: Dict[int, int] = {}
-    spans: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+    spans: SpanType = defaultdict(list)
     for entry in sorted_data_list:
         if 'Guard' in entry:
             guard_id = int(entry.split('#')[1].split()[0])
@@ -38,13 +47,12 @@ def sleeping_map(sorted_data_list: List[str]) -> SleepingMap:
 
 
 def key_with_max_value(minutes: Dict[int, int]) -> int:
-    max_asleep = 0
-    chosen_guard = 0
-    for _id, _asleep in minutes.items():
-        if _asleep > max_asleep:
-            chosen_guard = _id
-            max_asleep = _asleep
-    return chosen_guard
+    sorted_list_of_tuples = sorted(
+        minutes.items(),
+        key=lambda x: x[1],
+        reverse=True,
+    )
+    return sorted_list_of_tuples[0][0]
 
 
 def minute_most_asleep(spans: List[Tuple[int, int]]) -> Tuple[int, int]:
@@ -59,7 +67,7 @@ def minute_most_asleep(spans: List[Tuple[int, int]]) -> Tuple[int, int]:
 
 
 def choose_guard(input_data: str) -> int:
-    data_list = input_data.strip().split("\n")
+    data_list = input_data.strip().split('\n')
     actions_in_order = order_chronologically(data_list)
     minutes, spans = sleeping_map(actions_in_order)
     chosen_guard = key_with_max_value(minutes)
@@ -68,14 +76,14 @@ def choose_guard(input_data: str) -> int:
 
 
 def guard_freq_alseep(input_data: str) -> int:
-    data_list = input_data.strip().split("\n")
+    data_list = input_data.strip().split('\n')
     actions_in_order = order_chronologically(data_list)
     minutes, spans = sleeping_map(actions_in_order)
     guard_freq = {}
     freq_minute = {}
-    for _id, span_list in spans.items():
+    for k, span_list in spans.items():
         m, f = minute_most_asleep(span_list)
-        guard_freq.update({_id: f})
+        guard_freq.update({k: f})
         freq_minute.update({f: m})
     chosen_guard = key_with_max_value(guard_freq)
     chosen_minute = freq_minute[guard_freq[chosen_guard]]
