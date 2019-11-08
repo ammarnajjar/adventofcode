@@ -1,12 +1,10 @@
-#!/usr/bin/env python
 import pytest
-
-from .solution import largest_area
-from .solution import manhatten_distance
-from .solution import non_outer_points
-from .solution import Point
-from .solution import region_size
-from .solution import str_to_points
+from day_06.solution import largest_area
+from day_06.solution import manhatten_distance
+from day_06.solution import non_outer_points
+from day_06.solution import Point
+from day_06.solution import region_size
+from day_06.solution import str_to_points
 
 input_manhatten_str = [
     (

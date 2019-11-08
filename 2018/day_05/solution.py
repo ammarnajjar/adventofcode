@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import sys
 
 
@@ -8,8 +7,11 @@ def chars_after_reactions(input_data: str) -> int:
         i = 1
         r = ''
         while i < len(input_data):
-            # ord('a') - ord('A') == 32
-            if abs(ord(input_data[i - 1]) - ord(input_data[i])) == 32:
+            base_cdiff = ord('a') - ord('A')  # == 32
+            cdiff = abs(
+                ord(input_data[i - 1]) - ord(input_data[i]),
+            )
+            if cdiff == base_cdiff:
                 i += 1
                 stop = False
             else:
@@ -26,12 +28,12 @@ def chars_after_reactions(input_data: str) -> int:
 
 def min_chars_after_reactions(input_data: str) -> int:
     all_chars = set(input_data.lower())
-    _min = sys.maxsize
+    min_char = sys.maxsize
     for c in all_chars:
         n = chars_after_reactions(
             input_data.replace(c, '').replace(c.upper(), ''),
         )
-        if n < _min:
-            _min = n
-        print(c, n, _min)
-    return _min
+        if n < min_char:
+            min_char = n
+        print(c, n, min_char)
+    return min_char

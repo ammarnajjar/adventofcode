@@ -36,4 +36,4 @@ jobs:
       - name: Run tests
         run: |
           pip install pytest pytest-cov pytest-xdist
-          pytest --cov=2018 --cov-fail-under=100
+          pytest --cov-report term-missing --cov=2018 --cov-fail-under=100
