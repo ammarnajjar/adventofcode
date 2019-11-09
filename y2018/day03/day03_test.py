@@ -1,7 +1,6 @@
 import pytest
-
-from solutions.y2018.day03 import claim_not_overlaped
-from solutions.y2018.day03 import shared_squares
+from day03 import claim_not_overlaped
+from day03 import shared_squares
 
 INPUT1 = [
     ('#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n', 4),

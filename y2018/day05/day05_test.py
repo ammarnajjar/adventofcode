@@ -1,7 +1,6 @@
 import pytest
-
-from solutions.y2018.day05 import chars_after_reactions
-from solutions.y2018.day05 import min_chars_after_reactions
+from day05 import chars_after_reactions
+from day05 import min_chars_after_reactions
 
 INPUT_FORMULA1 = [
     (

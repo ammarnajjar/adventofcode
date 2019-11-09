@@ -1,3 +1,4 @@
+import os
 from typing import List
 
 
@@ -81,7 +82,8 @@ def claim_not_overlaped(input_data: str) -> int:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input03', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input03', 'r') as input_file:
         input_text = input_file.read()
         print(f'Shared squares = {shared_squares(input_text)}')
         print(f'Claim not overlapped = {claim_not_overlaped(input_text)}')
