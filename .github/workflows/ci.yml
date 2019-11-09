@@ -1,4 +1,4 @@
-name: 2018
+name: CI
 
 on: [push]
 
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python_version: [3.7]
-        os: [ubuntu-latest, macos-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@master
@@ -26,14 +26,14 @@ jobs:
       - name: Lint (flake8)
         run: |
           pip install flake8
-          flake8 2018 --count --show-source --statistics
+          flake8 solutions --count --show-source --statistics
 
       - name: Check type hints
         run: |
           pip install mypy
-          mypy --ignore-missing-imports 2018/**/*.py
+          mypy --ignore-missing-imports solutions
 
       - name: Run tests
         run: |
-          pip install pytest pytest-cov pytest-xdist
-          pytest --cov-report term-missing --cov=2018 --cov-fail-under=100
+          pip install pytest pytest-cov
+          pytest --cov=solutions --cov-report term-missing --cov-fail-under=100

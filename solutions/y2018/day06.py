@@ -102,3 +102,10 @@ def region_size(points_string: str, max_size: int) -> int:
             if d < max_size:
                 region += 1
     return region
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input06', 'r') as input_file:
+        input_text = input_file.read().strip()
+        print(f'Largest area = {largest_area(input_text)}')
+        print(f'Region size = {region_size(input_text, 10000)}')

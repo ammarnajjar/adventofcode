@@ -88,3 +88,10 @@ def guard_freq_alseep(input_data: str) -> int:
     chosen_guard = key_with_max_value(guard_freq)
     chosen_minute = freq_minute[guard_freq[chosen_guard]]
     return chosen_guard * chosen_minute
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input04', 'r') as input_file:
+        input_text = input_file.read()
+        print(f'Chosen guard = {choose_guard(input_text)}')
+        print(f'Guard frequent sleep minute = {guard_freq_alseep(input_text)}')
