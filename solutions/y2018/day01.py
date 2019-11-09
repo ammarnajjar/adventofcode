@@ -26,3 +26,12 @@ def first_frequesncy_reached_twice(input_str: str) -> int:
             return current_freq
         else:
             freq_cache.append(current_freq)
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input01', 'r') as input_file:
+        content_text = input_file.read()
+        freq = sum_lines(content_text)
+        print(f'Resulting frequency = {freq}')
+        freq = first_frequesncy_reached_twice(content_text)
+        print(f'First frequency reached twice= {freq}')

@@ -19,7 +19,7 @@ def checksum(input_data: str) -> int:
     return twos * threes
 
 
-def common_letters_between_correct_codes(input_data: str) -> str:
+def common_letters(input_data: str) -> str:
     data_list = input_data.strip().split('\n')
     for x, y in combinations(data_list, 2):
         # get index where two strings differ
@@ -32,3 +32,10 @@ def common_letters_between_correct_codes(input_data: str) -> str:
             index = r[0][0]
             return x[:index] + x[index + 1:]
     return ''
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input02', 'r') as input_file:
+        input_text = input_file.read()
+        print(f'Checksum = {checksum(input_text)}')
+        print(f'Common Letters = {common_letters(input_text)}')

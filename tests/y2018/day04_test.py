@@ -1,9 +1,10 @@
 import pytest
-from day_04.solution import choose_guard
-from day_04.solution import guard_freq_alseep
-from day_04.solution import key_with_max_value
-from day_04.solution import order_chronologically
-from day_04.solution import sleeping_map
+
+from solutions.y2018.day04 import choose_guard
+from solutions.y2018.day04 import guard_freq_alseep
+from solutions.y2018.day04 import key_with_max_value
+from solutions.y2018.day04 import order_chronologically
+from solutions.y2018.day04 import sleeping_map
 
 soring_input = [
     (

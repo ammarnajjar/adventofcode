@@ -37,3 +37,10 @@ def min_chars_after_reactions(input_data: str) -> int:
             min_char = n
         print(c, n, min_char)
     return min_char
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input05', 'r') as input_file:
+        input_text = input_file.read().strip()
+        print(f'Len after reactions = {chars_after_reactions(input_text)}')
+        print(f'Min after reactions = {min_chars_after_reactions(input_text)}')

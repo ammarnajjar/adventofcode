@@ -1,6 +1,7 @@
 import pytest
-from day_02.solution import checksum
-from day_02.solution import common_letters_between_correct_codes
+
+from solutions.y2018.day02 import checksum
+from solutions.y2018.day02 import common_letters
 
 INPUT1 = [('abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab\n', 12)]
 
@@ -31,4 +32,4 @@ def input_part2(request):
 class TestDay02Part02:
     def test_checksum(self, input_part2):
         input_str, expected = input_part2
-        assert common_letters_between_correct_codes(input_str) == expected
+        assert common_letters(input_str) == expected

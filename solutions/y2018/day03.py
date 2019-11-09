@@ -78,3 +78,10 @@ def claim_not_overlaped(input_data: str) -> int:
     # given that there is only one claim not overlapping
     no_overlapped_id = set(all_ids) - set(overlapped_ids)
     return no_overlapped_id.pop()
+
+
+if __name__ == '__main__':  # pragma no cover
+    with open('input03', 'r') as input_file:
+        input_text = input_file.read()
+        print(f'Shared squares = {shared_squares(input_text)}')
+        print(f'Claim not overlapped = {claim_not_overlaped(input_text)}')
