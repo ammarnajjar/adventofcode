@@ -1,3 +1,4 @@
+import os
 import sys
 
 
@@ -40,7 +41,8 @@ def min_chars_after_reactions(input_data: str) -> int:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input05', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input05', 'r') as input_file:
         input_text = input_file.read().strip()
         print(f'Len after reactions = {chars_after_reactions(input_text)}')
         print(f'Min after reactions = {min_chars_after_reactions(input_text)}')

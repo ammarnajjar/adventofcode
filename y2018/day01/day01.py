@@ -1,3 +1,4 @@
+import os
 from typing import Iterator
 from typing import List
 
@@ -29,7 +30,8 @@ def first_frequesncy_reached_twice(input_str: str) -> int:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input01', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input01', 'r') as input_file:
         content_text = input_file.read()
         freq = sum_lines(content_text)
         print(f'Resulting frequency = {freq}')

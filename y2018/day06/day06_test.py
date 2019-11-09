@@ -1,11 +1,10 @@
 import pytest
-
-from solutions.y2018.day06 import largest_area
-from solutions.y2018.day06 import manhatten_distance
-from solutions.y2018.day06 import non_outer_points
-from solutions.y2018.day06 import Point
-from solutions.y2018.day06 import region_size
-from solutions.y2018.day06 import str_to_points
+from day06 import largest_area
+from day06 import manhatten_distance
+from day06 import non_outer_points
+from day06 import Point
+from day06 import region_size
+from day06 import str_to_points
 
 input_manhatten_str = [
     (

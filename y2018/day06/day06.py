@@ -1,3 +1,4 @@
+import os
 import sys
 from dataclasses import dataclass
 from typing import List
@@ -105,7 +106,8 @@ def region_size(points_string: str, max_size: int) -> int:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input06', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input06', 'r') as input_file:
         input_text = input_file.read().strip()
         print(f'Largest area = {largest_area(input_text)}')
         print(f'Region size = {region_size(input_text, 10000)}')

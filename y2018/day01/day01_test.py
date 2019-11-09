@@ -1,7 +1,6 @@
 import pytest
-
-from solutions.y2018.day01 import first_frequesncy_reached_twice
-from solutions.y2018.day01 import sum_lines
+from day01 import first_frequesncy_reached_twice
+from day01 import sum_lines
 
 
 FREQ_INPUT1 = [('+1\n+1\n+1', 3), ('+1\n+1\n-2', 0), ('-1\n-2\n-3', -6)]
