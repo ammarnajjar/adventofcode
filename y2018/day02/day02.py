@@ -1,3 +1,4 @@
+import os
 from itertools import combinations
 
 
@@ -35,7 +36,8 @@ def common_letters(input_data: str) -> str:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input02', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input02', 'r') as input_file:
         input_text = input_file.read()
         print(f'Checksum = {checksum(input_text)}')
         print(f'Common Letters = {common_letters(input_text)}')

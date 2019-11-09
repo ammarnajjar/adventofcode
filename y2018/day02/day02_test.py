@@ -1,7 +1,6 @@
 import pytest
-
-from solutions.y2018.day02 import checksum
-from solutions.y2018.day02 import common_letters
+from day02 import checksum
+from day02 import common_letters
 
 INPUT1 = [('abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab\n', 12)]
 

@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 from datetime import datetime
 from typing import Dict
@@ -91,7 +92,8 @@ def guard_freq_alseep(input_data: str) -> int:
 
 
 if __name__ == '__main__':  # pragma no cover
-    with open('input04', 'r') as input_file:
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{current_path}/input04', 'r') as input_file:
         input_text = input_file.read()
         print(f'Chosen guard = {choose_guard(input_text)}')
         print(f'Guard frequent sleep minute = {guard_freq_alseep(input_text)}')
