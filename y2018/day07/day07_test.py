@@ -12,16 +12,16 @@ from day07 import work_duration
 input_str = [
     (
         'Step C must be finished before step A can begin.',
-        [('C', 'A')],
+        (('C', 'A'),),
     ),
     (
         'Step C must be finished before step A can begin.\n'
         'Step C must be finished before step B can begin.\n',
-        [('C', 'A'), ('C', 'B')],
+        (('C', 'A'), ('C', 'B')),
     ),
     (
         'Step C must be finished before step A can begin.\n' * 100,
-        [('C', 'A')] * 100,
+        (('C', 'A'),) * 100,
     ),
     (
         'Step C must be finished before step A can begin.\n'
@@ -31,7 +31,7 @@ input_str = [
         'Step B must be finished before step E can begin.\n'
         'Step D must be finished before step E can begin.\n'
         'Step F must be finished before step E can begin.\n',
-        [
+        (
             ('C', 'A'),
             ('C', 'F'),
             ('A', 'B'),
@@ -39,7 +39,7 @@ input_str = [
             ('B', 'E'),
             ('D', 'E'),
             ('F', 'E'),
-        ],
+        ),
     ),
 ]
 
@@ -51,45 +51,45 @@ def input_steps_str(request):
 
 input_steps_list = [
     (
-        [('C', 'A')],
-        [
-            Node('C', [], ['A']),
-            Node('A', ['C'], []),
-        ],
+        (('C', 'A'),),
+        (
+            Node('C', (), ('A',)),
+            Node('A', ('C',), ()),
+        ),
     ),
     (
-        [('C', 'A')] * 10,
-        [
-            Node('C', [], ['A']),
-            Node('A', ['C'], []),
-        ],
+        (('C', 'A'),) * 10,
+        (
+            Node('C', (), ('A',)),
+            Node('A', ('C',), ()),
+        ),
     ),
     (
-        [('C', 'A'), ('C', 'B')],
-        [
-            Node('C', [], ['A', 'B']),
-            Node('A', ['C'], []),
-            Node('B', ['C'], []),
-        ],
+        (('C', 'A'), ('C', 'B')),
+        (
+            Node('C', (), ('A', 'B')),
+            Node('A', ('C',), ()),
+            Node('B', ('C',), ()),
+        ),
     ),
     (
-        [('C', 'B'), ('C', 'A')],
-        [
-            Node('C', [], ['B', 'A']),
-            Node('B', ['C'], []),
-            Node('A', ['C'], []),
-        ],
+        (('C', 'B'), ('C', 'A')),
+        (
+            Node('C', (), ('B', 'A')),
+            Node('B', ('C',), ()),
+            Node('A', ('C',), ()),
+        ),
     ),
     (
-        [('C', 'B'), ('C', 'A')],
-        [
-            Node('C', [], ['B', 'A']),
-            Node('B', ['C'], []),
-            Node('A', ['C'], []),
-        ],
+        (('C', 'B'), ('C', 'A')),
+        (
+            Node('C', (), ('B', 'A')),
+            Node('B', ('C',), ()),
+            Node('A', ('C',), ()),
+        ),
     ),
     (
-        [
+        (
             ('C', 'A'),
             ('C', 'F'),
             ('A', 'B'),
@@ -97,15 +97,15 @@ input_steps_list = [
             ('B', 'E'),
             ('D', 'E'),
             ('F', 'E'),
-        ],
-        [
-            Node('C', [], ['A', 'F']),
-            Node('A', ['C'], ['B', 'D']),
-            Node('F', ['C'], ['E']),
-            Node('B', ['A'], ['E']),
-            Node('D', ['A'], ['E']),
-            Node('E', ['B', 'D', 'F'], []),
-        ],
+        ),
+        (
+            Node('C', (), ('A', 'F')),
+            Node('A', ('C',), ('B', 'D')),
+            Node('F', ('C',), ('E',)),
+            Node('B', ('A',), ('E',)),
+            Node('D', ('A',), ('E',)),
+            Node('E', ('B', 'D', 'F'), ()),
+        ),
     ),
 ]
 
@@ -117,56 +117,56 @@ def input_steps(request):
 
 input_sort_list = [
     (
-        [
-            Node('C', [], ['A']),
-            Node('A', ['C'], []),
-        ],
-        [
-            Node('A', ['C'], []),
-            Node('C', [], ['A']),
-        ],
+        (
+            Node('C', (), ('A',)),
+            Node('A', ('C',), ()),
+        ),
+        (
+            Node('A', ('C',), ()),
+            Node('C', (), ('A',)),
+        ),
     ),
     (
-        [
-            Node('C', ['A'], []),
-            Node('A', [], ['D', 'C']),
-            Node('D', [], ['C']),
-        ],
-        [
-            Node('A', [], ['C', 'D']),
-            Node('C', ['A'], []),
-            Node('D', [], ['C']),
-        ],
+        (
+            Node('C', ('A',), ()),
+            Node('A', (), ('D', 'C')),
+            Node('D', (), ('C',)),
+        ),
+        (
+            Node('A', (), ('C', 'D')),
+            Node('C', ('A',), ()),
+            Node('D', (), ('C',)),
+        ),
     ),
     (
-        [
-            Node('C', [], ['B', 'A']),
-            Node('B', ['C', 'A'], []),
-            Node('A', ['C'], []),
-        ],
-        [
-            Node('A', ['C'], []),
-            Node('B', ['A', 'C'], []),
-            Node('C', [], ['A', 'B']),
-        ],
+        (
+            Node('C', (), ('B', 'A')),
+            Node('B', ('C', 'A'), ()),
+            Node('A', ('C',), ()),
+        ),
+        (
+            Node('A', ('C',), ()),
+            Node('B', ('A', 'C'), ()),
+            Node('C', (), ('A', 'B')),
+        ),
     ),
     (
-        [
-            Node('C', [], ['A', 'F']),
-            Node('A', ['C'], ['B', 'D']),
-            Node('F', ['C'], ['E']),
-            Node('B', ['A'], ['E']),
-            Node('D', ['A'], ['E']),
-            Node('E', ['B', 'D', 'F'], []),
-        ],
-        [
-            Node('A', ['C'], ['B', 'D']),
-            Node('B', ['A'], ['E']),
-            Node('C', [], ['A', 'F']),
-            Node('D', ['A'], ['E']),
-            Node('E', ['B', 'D', 'F'], []),
-            Node('F', ['C'], ['E']),
-        ],
+        (
+            Node('C', (), ('A', 'F')),
+            Node('A', ('C',), ('B', 'D')),
+            Node('F', ('C',), ('E',)),
+            Node('B', ('A',), ('E',)),
+            Node('D', ('A',), ('E',)),
+            Node('E', ('B', 'D', 'F'), ()),
+        ),
+        (
+            Node('A', ('C',), ('B', 'D')),
+            Node('B', ('A',), ('E',)),
+            Node('C', (), ('A', 'F')),
+            Node('D', ('A',), ('E',)),
+            Node('E', ('B', 'D', 'F'), ()),
+            Node('F', ('C',), ('E',)),
+        ),
     ),
 ]
 
@@ -178,38 +178,38 @@ def input_sorting(request):
 
 input_nodes_list = [
     (
-        [
-            Node('A', ['C'], []),
-            Node('C', [], ['A']),
-        ],
-        'CA',
+        (
+            Node('A', ('C',), ()),
+            Node('C', (), ('A',)),
+        ),
+        ('C', 'A'),
     ),
     (
-        [
-            Node('A', [], ['C']),
-            Node('C', ['A'], []),
-        ],
-        'AC',
+        (
+            Node('A', (), ('C',)),
+            Node('C', ('A',), ()),
+        ),
+        ('A', 'C'),
     ),
     (
-        [
-            Node('A', ['C'], []),
-            Node('B', ['C'], []),
-            Node('C', [], ['A', 'B']),
-            Node('D', ['A'], []),
-            Node('F', ['A'], []),
-        ],
-        'CABDF',
+        (
+            Node('A', ('C',), ()),
+            Node('B', ('C',), ()),
+            Node('C', (), ('A', 'B')),
+            Node('D', ('A',), ()),
+            Node('F', ('A',), ()),
+        ),
+        ('C', 'A', 'B', 'D', 'F'),
     ),
     (
-        [
-            Node('A', ['C'], []),
-            Node('B', ['C'], []),
-            Node('C', [], ['A', 'B']),
-            Node('D', ['A'], ['B']),
-            Node('F', ['A'], []),
-        ],
-        'CABDF',
+        (
+            Node('A', ('C',), ()),
+            Node('C', (), ('A', 'B')),
+            Node('B', ('C',), ()),
+            Node('D', ('A',), ('B',)),
+            Node('F', ('A',), ()),
+        ),
+        ('C', 'A', 'B', 'D', 'F'),
     ),
 ]
 
@@ -341,72 +341,72 @@ def input_sample_str2(request):
 
 input_for_parallelisation = [
     (
-        [
-            Node('C', [], ['B', 'A']),
-            Node('B', ['C'], []),
-            Node('A', ['C'], []),
-        ],
-        [
+        (
+            Node('C', (), ('B', 'A')),
+            Node('B', ('C',), ()),
+            Node('A', ('C',), ()),
+        ),
+        (
             ['C'],
             ['B', 'A'],
-        ],
+        ),
     ),
     (
-        [
-            Node('C', [], ['B', 'A']),
-            Node('B', ['C'], []),
-            Node('D', ['C', 'B'], []),
-            Node('A', ['C'], []),
-        ],
-        [
+        (
+            Node('C', (), ('B', 'A')),
+            Node('B', ('C',), ()),
+            Node('D', ('C', 'B'), ()),
+            Node('A', ('C',), ()),
+        ),
+        (
             ['C'],
             ['B', 'A'],
             ['D'],
-        ],
+        ),
     ),
     (
-        [
-            Node('C', [], ['A', 'D']),
-            Node('B', [], ['D']),
-            Node('D', ['C', 'B'], []),
-            Node('A', ['C'], []),
-        ],
-        [
+        (
+            Node('C', (), ('A', 'D')),
+            Node('B', (), ('D',)),
+            Node('D', ('C', 'B'), ()),
+            Node('A', ('C',), ()),
+        ),
+        (
             ['C', 'B'],
             ['D', 'A'],
-        ],
+        ),
     ),
     (
-        [
-            Node('C', [], ['A', 'F']),
-            Node('A', ['C'], ['B', 'D']),
-            Node('F', ['C'], ['E']),
-            Node('B', ['A'], ['E']),
-            Node('D', ['A'], ['E']),
-            Node('E', ['B', 'D', 'F'], []),
-        ],
-        [
+        (
+            Node('C', (), ('A', 'F')),
+            Node('A', ('C',), ('B', 'D')),
+            Node('F', ('C',), ('E',)),
+            Node('B', ('A',), ('E',)),
+            Node('D', ('A',), ('E',)),
+            Node('E', ('B', 'D', 'F'), ()),
+        ),
+        (
             ['C'],
             ['A', 'F'],
             ['B', 'D'],
             ['E'],
-        ],
+        ),
     ),
     (  # same as above but different order
-        [
-            Node('A', ['C'], ['B', 'D']),
-            Node('B', ['A'], ['E']),
-            Node('C', [], ['A', 'F']),
-            Node('D', ['A'], ['E']),
-            Node('E', ['B', 'D', 'F'], []),
-            Node('F', ['C'], ['E']),
-        ],
-        [
+        (
+            Node('A', ('C',), ('B', 'D')),
+            Node('B', ('A',), ('E',)),
+            Node('C', (), ('A', 'F')),
+            Node('D', ('A',), ('E',)),
+            Node('E', ('B', 'D', 'F'), ()),
+            Node('F', ('C',), ('E',)),
+        ),
+        (
             ['C'],
             ['A', 'F'],
             ['B', 'D'],
             ['E'],
-        ],
+        ),
     ),
 ]
 
