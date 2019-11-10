@@ -71,18 +71,6 @@ def find_dir_graph(input_data: str) -> str:
     return order_nodes(nodes)
 
 
-@dataclass
-class Worker:
-    init_cost: int = 0
-    is_working: bool = False
-
-    def cost(self, job: str) -> int:
-        return ord(job) - ord('A') + 1 + self.init_cost
-
-    def work(self, job: str) -> str:
-        return job * self.cost(job)
-
-
 def collect_parallelizable_nodes(nodes: List[Node]) -> List[List[str]]:
     stk = []  # stak parallel jobs
     while (nodes):
@@ -114,15 +102,6 @@ def work_duration(
     workers_count: int = 5,
     init_cost: int = 60,
 ) -> int:
-    parsed_nodes = parse_str(input_str)
-    nodes = gen_nodes(parsed_nodes)
-    par = collect_parallelizable_nodes(nodes)
-    pipeline = order_nodes(nodes)
-    for i, npar in enumerate(par):
-        for node in pipeline:
-            if node in npar:
-                print(Worker().work(node))
-                print(i, node)
     return 0
 
 
