@@ -1,60 +1,72 @@
-from typing import List
-
 import pytest
+from day09 import insert
+from day09 import part1
 
-# flake8: noqa
 
-use_cases = (
-    (0, [0]),
-    (1, [0, 1]),
-    (2, [0, 2, 1]),
-    (3, [0, 2, 1, 3]),
-    (4, [0, 4, 2, 1, 3]),
-    (5, [0, 4, 2, 5, 1, 3]),
-    (6, [0, 4, 2, 5, 1, 6, 3]),
-    (7, [0, 4, 2, 5, 1, 6, 3, 7]),
-    (8, [0, 8, 4, 2, 5, 1, 6, 3, 7]),
-    (9, [0, 8, 4, 9, 2, 5, 1, 6, 3, 7]),
-    (15, [0, 8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (16, [0, 16, 8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (17, [0, 16, 8, 17, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (18, [0, 16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (19, [0, 16, 8, 17, 4, 18, 9, 19, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (20, [0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (21, [0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (22, [0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (23, [0, 16, 8, 17, 4, 18, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (24, [0, 16, 8, 17, 4, 18, 19, 2, 24, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
-    (25, [0, 16, 8, 17, 4, 18, 19, 2, 24, 20, 25, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15]),  # noqa WPS221
+use_cases1 = (
+    (
+        '9 players; last marble is worth 22 points',
+        [
+            0, 16, 8, 17, 4, 18, 9, 19, 2, 20,
+            10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
+        ],
+    ),
+    (
+        '9 players; last marble is worth 23 points',
+        [
+            0, 16, 8, 17, 4, 18, 19, 2, 20, 10,
+            21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
+        ],
+    ),
+    (
+        '9 players; last marble is worth 24 points',
+        [
+            0, 16, 8, 17, 4, 18, 19, 2, 24, 20, 10,
+            21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
+        ],
+    ),
 )
-
-
-def insert(x: int) -> List[int]:
-    if x == 0:
-        return [0]
-    if x == 1:
-        return [0, 1]
-    g = insert(x - 1)
-    if (x - 1) % 23 != 0:  # noqa WPS504
-        pos = g.index(x - 1) + 2
-    else:
-        pos = g.index(x - 2) - 4
-    print(x, pos, g)
-    if pos > len(g):
-        pos = pos - len(g)
-    print(x, pos, g)
-    if x % 23 != 0:  # noqa WPS504
-        g.insert(pos, x)
-    else:
-        pos = pos - 9
-        g.pop(pos)
-    return g
 
 
 @pytest.mark.parametrize(
-    'use_case',
-    use_cases,
+    ('input_text', 'expected'),
+    use_cases1,
 )
-def test_marble_insertion(use_case):
-    x, y = use_case
-    assert insert(x) == y
+def test_marble_insertion(input_text, expected):
+    assert insert(input_text) == expected
+
+
+use_cases2 = (
+    (
+        '9 players; last marble is worth 25 points',
+        32,
+    ),
+    (
+        '10 players; last marble is worth 1618 points',
+        8317,
+    ),
+    (
+        '13 players; last marble is worth 7999 points',
+        146373,
+    ),
+    (
+        '17 players; last marble is worth 1104 points',
+        2764,
+    ),
+    (
+        '21 players; last marble is worth 6111 points',
+        54718,
+    ),
+    (
+        '30 players; last marble is worth 5807 points',
+        37305,
+    ),
+)
+
+
+@pytest.mark.parametrize(
+    ('input_text', 'expected'),
+    use_cases2,
+)
+def test_players_score(input_text, expected):
+    assert part1(input_text) == expected
