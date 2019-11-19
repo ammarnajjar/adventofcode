@@ -23,19 +23,9 @@ jobs:
           python -m pip install -U pip
           pip install -r requirements.txt
 
-      - name: Lint (flake8)
-        run: |
-          pip install wemake-python-styleguide
-          flake8 y* --count --show-source --statistics
-
       - name: pre-commit checks
         run: |
           pre-commit run --all-files --show-diff-on-failure
-
-      - name: Check type hints
-        run: |
-          pip install mypy
-          mypy --ignore-missing-imports .
 
       - name: Run tests
         run: |
