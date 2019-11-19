@@ -1,39 +1,5 @@
 import pytest
-from day09 import insert
-from day09 import part1
-
-
-use_cases1 = (
-    (
-        '9 players; last marble is worth 22 points',
-        [
-            0, 16, 8, 17, 4, 18, 9, 19, 2, 20,
-            10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
-        ],
-    ),
-    (
-        '9 players; last marble is worth 23 points',
-        [
-            0, 16, 8, 17, 4, 18, 19, 2, 20, 10,
-            21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
-        ],
-    ),
-    (
-        '9 players; last marble is worth 24 points',
-        [
-            0, 16, 8, 17, 4, 18, 19, 2, 24, 20, 10,
-            21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15,
-        ],
-    ),
-)
-
-
-@pytest.mark.parametrize(
-    ('input_text', 'expected'),
-    use_cases1,
-)
-def test_marble_insertion(input_text, expected):
-    assert insert(input_text) == expected
+from day09 import part2
 
 
 use_cases2 = (
@@ -69,4 +35,4 @@ use_cases2 = (
     use_cases2,
 )
 def test_players_score(input_text, expected):
-    assert part1(input_text) == expected
+    assert part2(input_text) == expected
