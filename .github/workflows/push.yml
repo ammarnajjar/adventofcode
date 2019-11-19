@@ -25,7 +25,7 @@ jobs:
 
       - name: Lint (flake8)
         run: |
-          pip install wemake-python-styleguide
+          pip install flake8
           flake8 y* --count --show-source --statistics
 
       - name: pre-commit checks

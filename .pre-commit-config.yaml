@@ -16,7 +16,6 @@ repos:
     rev: 3.7.9
     hooks:
       - id: flake8
-        additional_dependencies: [wemake-python-styleguide==0.12.5]
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.4.4
     hooks:
