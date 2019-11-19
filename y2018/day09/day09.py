@@ -1,6 +1,7 @@
 import os
+from collections import deque
+from typing import Deque
 from typing import Dict
-from typing import List
 from typing import Tuple
 
 
@@ -11,53 +12,43 @@ def parse(input_str: str) -> Tuple[int, int]:
     return marbles, players
 
 
-def inc_p(player: int, ceiling: int) -> int:
-    if player == ceiling:
-        return 1
-    return player + 1
+def cycle(i: int, circle: Deque) -> None:
+    if i > 0:
+        v = circle.pop()
+        circle.appendleft(v)
+        cycle(i - 1, circle)
+    elif i < 0:
+        v = circle.popleft()
+        circle.append(v)
+        cycle(i + 1, circle)
 
 
-def calc(input_str: str) -> Tuple[List[int], int]:
+def calc(input_str: str) -> int:
     marbles, players = parse(input_str)
 
     scores: Dict[int, int] = {}
-    g = [0, 1]
+    g = deque([0])
 
-    player = 1
-    pos = 1
-    for m in range(2, marbles + 1):
-        player = inc_p(player, players)
+    for m in range(1, marbles + 1):
         if m % 23 == 0:
-            pos = pos - 7
-            score = g.pop(pos)
-            score += m
-            current_score = scores.get(player, 0)
-            scores.update({player: score + current_score})
-            continue
-        elif (m - 1) % 23 == 0:
-            pos = g.index(m - 2) - 4
+            player = (m - 1) % players
+            cycle(-7, g)
+            score = scores.get(player, 0) + m + g.pop()
+            scores.update({player: score})
         else:
-            pos = g.index(m - 1) + 2
-        if pos > len(g):
-            pos = pos - len(g)
-        g.insert(pos, m)
-    print(scores)
-    max_score = max(
+            cycle(2, g)
+            g.append(m)
+    return max(
         scores.get(player, 0) for player in range(1, players + 1)
     )
-    return g, max_score
 
 
-def insert(input_str: str) -> List[int]:
-    return calc(input_str)[0]
-
-
-def part1(input_str: str) -> int:
-    return calc(input_str)[1]
+def part2(input_str: str) -> int:
+    return calc(input_str)
 
 
 if __name__ == '__main__':  # pragma no cover
     current_path = os.path.dirname(os.path.realpath(__file__))
     with open(f'{current_path}/input09', 'r') as input_file:
         input_text = input_file.read().strip()
-    print(part1(input_text))
+    print(part2(input_text))
