@@ -1,5 +1,5 @@
 import pytest
-from day09 import part2
+from day09 import calc
 
 
 use_cases2 = (
@@ -35,4 +35,4 @@ use_cases2 = (
     use_cases2,
 )
 def test_players_score(input_text, expected):
-    assert part2(input_text) == expected
+    assert calc(input_text) == expected
