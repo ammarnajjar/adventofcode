@@ -16,11 +16,20 @@ def get_rules(input_text: str) -> Tuple[Dict[str, str], str]:
     return rules, state
 
 
+def sum_lives(state: str, offset: int) -> Tuple[str, int]:
+    last_s = state.rfind('#')
+    first_s = state.find('#')
+    state = state[first_s:last_s + 1]
+    return state, sum(i + offset for i, x in enumerate(state) if x == '#')
+
+
+def pad_state(state: str, margin: int = 4) -> str:
+    state = f'{state:.>{len(state) + margin}}'
+    return f'{state:.<{len(state) + 2 * margin}}'
+
+
 def calc(rules: Dict[str, str], state: str, generatiions: int) -> int:
-    margin = 4
-    expan = len(state) + margin
-    state = f'{state:.>{expan}}'
-    state = f'{state:.<{expan + margin}}'
+    state = pad_state(state)
     offset = 0
     for g in range(generatiions):
         new_state = ''
@@ -28,19 +37,16 @@ def calc(rules: Dict[str, str], state: str, generatiions: int) -> int:
             window = state[i - 2:i + 3]
             r = rules.get(window, '.')
             new_state += r
+        state, acc1 = sum_lives(state, offset)
+
         state = new_state
-        last_s = state.rfind('#')
         first_s = state.find('#')
         offset += first_s - 2
-        state = state[first_s:last_s + 1]
-        state = f'{state:.>{len(state) + margin}}'
-        state = f'{state:.<{len(state) + 2 * margin}}'
-        print(g + 1, state)
+        state, acc2 = sum_lives(state, offset)
+        state = pad_state(state)
+        print(g + 1, state, acc2 - acc1)
 
-    last_s = state.rfind('#')
-    first_s = state.find('#')
-    state = state[first_s:last_s + 1]
-    acc = sum(i+offset for i, x in enumerate(state) if x == '#')
+    state, acc = sum_lives(state, offset)
     return acc
 
 
@@ -51,3 +57,16 @@ if __name__ == '__main__':  # pragma no cover
     rules, state = get_rules(input_text)
     generations = 20
     print('part1: ', calc(rules, state, generations))  # 3798
+    # for part 2
+    # I looked into the game of life algorithm
+    # but then I thought that there might be a trick!
+    # for when I started the program I saw that the pattern
+    # does not chenge, so I calculated the change between
+    # two sequencial generations, and saw the trick!
+    generations = 150
+    print(
+        'part2: ',
+        calc(rules, state, generations) + (
+            50_000_000_000 - generations
+        ) * 78,
+    )  # 3900000002212
