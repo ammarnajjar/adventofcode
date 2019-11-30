@@ -25,7 +25,7 @@ jobs:
 
       - name: pre-commit checks
         run: |
-          pre-commit run --all-files --show-diff-on-failure
+          pre-commit run --all-files --show-diff-on-failure --color=always
 
       - name: Run tests
         run: |
