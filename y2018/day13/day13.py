@@ -2,6 +2,7 @@ import os
 from collections import namedtuple
 from dataclasses import dataclass
 from dataclasses import field
+from itertools import combinations
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -48,16 +49,15 @@ class Cart:
             '+':  (self.next_turn, True),
         }
         next = self.grid[self.pos.y - 1][self.pos.x]
+        self.grid[self.pos.y][self.pos.x] = self.previous_state
+        self.previous_state = next
+        self.pos = Position(self.pos.x, self.pos.y - 1)
         next_turn = trans_map.get(next)
         if next_turn:
             self.turn(*next_turn)
+            self.grid[self.pos.y][self.pos.x] = self.direction
         else:
-            self.grid[self.pos.y - 1][self.pos.x] = 'X'
-            return (self.pos.x, self.pos.y - 1)
-        self.grid[self.pos.y][self.pos.x] = self.previous_state
-        self.previous_state = next
-        self.grid[self.pos.y - 1][self.pos.x] = self.direction
-        self.pos = Position(self.pos.x, self.pos.y - 1)
+            return (self.pos.x, self.pos.y)
 
     def step_down(self):
         trans_map = {
@@ -67,16 +67,15 @@ class Cart:
             '+':  (self.next_turn, True),
         }
         next = self.grid[self.pos.y + 1][self.pos.x]
+        self.grid[self.pos.y][self.pos.x] = self.previous_state
+        self.previous_state = next
+        self.pos = Position(self.pos.x, self.pos.y + 1)
         next_turn = trans_map.get(next)
         if next_turn:
             self.turn(*next_turn)
+            self.grid[self.pos.y][self.pos.x] = self.direction
         else:
-            self.grid[self.pos.y + 1][self.pos.x] = 'X'
-            return (self.pos.x, self.pos.y + 1)
-        self.grid[self.pos.y][self.pos.x] = self.previous_state
-        self.previous_state = next
-        self.grid[self.pos.y + 1][self.pos.x] = self.direction
-        self.pos = Position(self.pos.x, self.pos.y + 1)
+            return (self.pos.x, self.pos.y)
 
     def step_left(self):
         trans_map = {
@@ -86,16 +85,15 @@ class Cart:
             '+':  (self.next_turn, True),
         }
         next = self.grid[self.pos.y][self.pos.x - 1]
+        self.grid[self.pos.y][self.pos.x] = self.previous_state
+        self.previous_state = next
+        self.pos = Position(self.pos.x - 1, self.pos.y)
         next_turn = trans_map.get(next)
         if next_turn:
             self.turn(*next_turn)
+            self.grid[self.pos.y][self.pos.x] = self.direction
         else:
-            self.grid[self.pos.y][self.pos.x - 1] = 'X'
-            return (self.pos.x - 1, self.pos.y)
-        self.grid[self.pos.y][self.pos.x] = self.previous_state
-        self.previous_state = next
-        self.grid[self.pos.y][self.pos.x - 1] = self.direction
-        self.pos = Position(self.pos.x - 1, self.pos.y)
+            return (self.pos.x, self.pos.y)
 
     def step_right(self):
         trans_map = {
@@ -105,16 +103,15 @@ class Cart:
             '+':  (self.next_turn, True),
         }
         next = self.grid[self.pos.y][self.pos.x + 1]
+        self.grid[self.pos.y][self.pos.x] = self.previous_state
+        self.previous_state = next
+        self.pos = Position(self.pos.x + 1, self.pos.y)
         next_turn = trans_map.get(next)
         if next_turn:
             self.turn(*next_turn)
+            self.grid[self.pos.y][self.pos.x] = self.direction
         else:
-            self.grid[self.pos.y][self.pos.x + 1] = 'X'
-            return (self.pos.x + 1, self.pos.y)
-        self.grid[self.pos.y][self.pos.x] = self.previous_state
-        self.previous_state = next
-        self.grid[self.pos.y][self.pos.x + 1] = self.direction
-        self.pos = Position(self.pos.x + 1, self.pos.y)
+            return (self.pos.x, self.pos.y)
 
     def turn(self, turn: int, intersection: bool = False):
         d: TurnMap = {
@@ -146,8 +143,7 @@ def plan_to_grid(plan: str) -> Grid:
     return r
 
 
-def collect_carts(plan: str) -> List[Cart]:
-    grid = plan_to_grid(plan)
+def collect_carts(grid: Grid) -> List[Cart]:
     carts_on_grid = ('<', '>', '^', 'v')
     carts = []
     for y in range(len(grid)):
@@ -160,35 +156,61 @@ def collect_carts(plan: str) -> List[Cart]:
                     next_turn=0,
                 )
                 carts.append(cart)
+    carts = sorted(carts, key=lambda x: x.pos)
     return carts
 
 
-def print_grid(grid: List[List[str]]) -> None:
-    print()
-    for y in range(len(grid)):
-        for x in range(len(grid[0])):
-            print(grid[y][x], end='')
-        print()
-
-
-def make_a_tick(plan: str) -> Tuple[int, int]:
-    carts = collect_carts(plan)
+def tick_to_crash(plan: str) -> Tuple[int, int]:
+    grid = plan_to_grid(plan)
+    carts = collect_carts(grid)
     while 1:
-        print_grid(carts[0].grid)
         for cart in carts:
             crash = cart.move()
             if crash:
-                print_grid(cart.grid)
                 return crash
+        carts = sorted(carts, key=lambda x: x.pos)
+
+
+def get_crashing_carts(carts: List[Cart]) -> List[Cart]:
+    r = []
+    for c1, c2 in combinations(carts, 2):
+        if c1.pos == c2.pos:
+            r.append((c1, c2))
+    return [a for b in r for a in b]  # flatten list of tuples
+
+
+def tick_to_last(plan: str) -> Tuple[int, int]:
+    init_grid = plan_to_grid(plan)
+    grid = plan_to_grid(plan)
+    carts = collect_carts(grid)
+    while len(carts) > 1:
+        for cart in carts:
+            cart.move()
+            cs = get_crashing_carts(carts)
+            if cs:
+                c = cs[0]
+                grid[c.pos.y][c.pos.x] = init_grid[c.pos.y][c.pos.x]
+            carts = [x for x in carts if x not in cs]
+            if cs:
+                print('crash: ', cs[0].pos, len(cs), len(carts))
+        carts = sorted(carts, key=lambda x: x.pos)
+    return carts[0].pos.x, carts[0].pos.y
 
 
 def find_first_collesion_point(plan: str) -> Tuple[int, int]:
-    return make_a_tick(plan)
+    return tick_to_crash(plan)
+
+
+def find_last_cart_position(plan: str) -> Tuple[int, int]:
+    return tick_to_last(plan)
 
 
 if __name__ == '__main__':  # pragma no cover
     current_path = os.path.dirname(os.path.realpath(__file__))
     with open(f'{current_path}/input13', 'r') as input_file:
         input_text = input_file.read()
-    # 8, 3 TODO: visually correct but numer is offset by 1
-    print('part1: ', find_first_collesion_point(input_text))
+    part1 = find_first_collesion_point(input_text)
+    print('part1: ', part1)
+    # 45,76
+    part2 = find_last_cart_position(input_text)
+    print('part2: ', part2)
