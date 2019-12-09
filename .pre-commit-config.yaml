@@ -3,6 +3,7 @@ repos:
     rev: v2.4.0
     hooks:
       - id: trailing-whitespace
+        exclude: "/*[day|input]13*"
       - id: check-merge-conflict
       - id: end-of-file-fixer
       - id: mixed-line-ending
