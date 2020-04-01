@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v2.5.0
     hooks:
       - id: trailing-whitespace
         exclude: "/*[day|input]13*"
@@ -18,32 +18,32 @@ repos:
     hooks:
       - id: flake8
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.4.4
+    rev: v1.5
     hooks:
       - id: autopep8
   - repo: https://github.com/pre-commit/pre-commit
-    rev: v1.20.0
+    rev: v2.2.0
     hooks:
       - id: validate_manifest
   - repo: https://github.com/asottile/pyupgrade
-    rev: v1.25.1
+    rev: v2.1.0
     hooks:
       - id: pyupgrade
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v1.8.0
+    rev: v2.1.0
     hooks:
       - id: reorder-python-imports
         language_version: python3
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v1.5.0
+    rev: v2.0.1
     hooks:
       - id: add-trailing-comma
   - repo: https://github.com/prettier/prettier
-    rev: 1.19.1
+    rev: 2.0.2
     hooks:
       - id: prettier
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.740
+    rev: v0.770
     hooks:
       - id: mypy
         language_version: python3
