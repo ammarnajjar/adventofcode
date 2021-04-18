@@ -10,13 +10,13 @@ with open(f'{current_path}/input07', 'r') as input_file:
     input_text = input_file.read().strip()
 
 
-def next_step(steps, l):
+def next_step(steps, lines):
     return [
-        s
-        for s in steps
+        step
+        for step in steps
         if all(
-            b != s
-            for (_, b) in l
+            b != step
+            for (_, b) in lines
         )
     ]
 
@@ -26,8 +26,8 @@ def time(c):
 
 
 def part1():
-    step_lines = [l.split() for l in input_text.split('\n')]
-    lines = [(l[1], l[7]) for l in step_lines]
+    step_lines = [lines.split() for lines in input_text.split('\n')]
+    lines = [(lines[1], lines[7]) for lines in step_lines]
     steps = set(
         [s[0] for s in lines] + [s[1] for s in lines],
     )
@@ -49,8 +49,8 @@ def part1():
 
 
 def part2():
-    step_lines = [l.split() for l in input_text.split('\n')]
-    lines = [(l[1], l[7]) for l in step_lines]
+    step_lines = [lines.split() for lines in input_text.split('\n')]
+    lines = [(lines[1], lines[7]) for lines in step_lines]
     steps = set(
         [s[0] for s in lines] + [s[1] for s in lines],
     )
